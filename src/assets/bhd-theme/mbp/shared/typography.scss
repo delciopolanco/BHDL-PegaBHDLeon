@@ -1,0 +1,36 @@
+$bhd-mbp-typography: mat-typography-config(
+  $font-family: "Trebuchet MS",
+  $display-4: mat-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+  $display-3: mat-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+  $display-2: mat-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
+  $display-1: mat-typography-level(34px, 40px, 400),
+  $headline: mat-typography-level(24px, 32px, 400),
+  $title: mat-typography-level(20px, 26px, 400),
+  $subheading-2: mat-typography-level(16px, 28px, 400),
+  $subheading-1: mat-typography-level(14px, 19px, 400),
+  $body-2: mat-typography-level(14px, 24px, 500),
+  $body-1: mat-typography-level(14px, 20px, 400),
+  $caption: mat-typography-level(16px, 20px, 400),
+  $button: mat-typography-level(14px, 14px, 500),
+  $input: mat-typography-level(inherit, 1.125, 400),
+);
+@mixin bhd-material-typography() {
+  @include mat-badge-typography($bhd-mbp-typography);
+  @include mat-base-typography($bhd-mbp-typography);
+  @include mat-autocomplete-typography($bhd-mbp-typography);
+  @include mat-bottom-sheet-typography($bhd-mbp-typography);
+  @include mat-button-typography($bhd-mbp-typography);
+  @include mat-button-toggle-typography($bhd-mbp-typography);
+  @include mat-card-typography($bhd-mbp-typography);
+  @include mat-checkbox-typography($bhd-mbp-typography);
+  @include mat-chips-typography($bhd-mbp-typography);
+  @include mat-table-typography($bhd-mbp-typography);
+  @include mat-datepicker-typography($bhd-mbp-typography);
+  @include mat-tabs-typography($bhd-mbp-typography);
+  @include mat-toolbar-typography($bhd-mbp-typography);
+  @include mat-tooltip-typography($bhd-mbp-typography);
+  @include mat-list-typography($bhd-mbp-typography);
+  @include mat-option-typography($bhd-mbp-typography);
+  @include mat-snack-bar-typography($bhd-mbp-typography);
+  @include mat-tree-typography($bhd-mbp-typography);
+}

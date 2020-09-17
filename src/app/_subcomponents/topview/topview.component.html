@@ -1,0 +1,18 @@
+<div *ngIf="showView">
+  <div class="title__content">
+    <h1 class="mat-title">{{ topName }}</h1>
+    <p color="accent" class="mat-subheading-1">
+      Asegura que tus datos esten correctamente actualizado para completar la
+      solicitud.
+    </p>
+  </div>
+  <mat-divider *ngIf="topName" style="position: unset"></mat-divider>
+
+  <form [formGroup]="fg" name="workItem">
+    <app-group
+      [groups]="groups$"
+      [formGroup]="fg"
+      [CaseID]="CaseID"
+    ></app-group>
+  </form>
+</div>

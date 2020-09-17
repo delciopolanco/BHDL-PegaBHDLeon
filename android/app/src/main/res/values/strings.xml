@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">pega-ng-cap</string>
+    <string name="title_activity_main">pega-ng-cap</string>
+    <string name="package_name">com.pegacap.app</string>
+    <string name="custom_url_scheme">com.pegacap.app</string>
+</resources>

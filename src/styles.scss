@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
+/*@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";*/
+
+@import "./assets/bhd-theme/bhd-themes.scss";
+
+body[theme="default"] {
+  @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+}
+body[theme="mbp-android-theme"] {
+  margin: 0;
+  background-color: #ecedf2;
+  @include bhd-themes("mbp-android");
+}
+body[theme="mbp-ios-theme"] {
+  @include bhd-themes("mbp-ios");
+}

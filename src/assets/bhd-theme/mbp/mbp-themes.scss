@@ -1,0 +1,51 @@
+@import "~@angular/material/theming";
+@import "./shared/colors.scss";
+@import "./shared/typography.scss";
+@import "./pages/fulfillment.scss";
+@import "./pages/customer.scss";
+
+//Global Variables
+
+$platform_ios: "IOS";
+
+@mixin mbp-themes($platform: "android") {
+  @if $platform == "android" {
+    @include mbp-android-theme($platform);
+  }
+  @if $platform == "ios" {
+    @include mbp-ios-theme();
+  }
+}
+
+@mixin mbp-android-theme($platform) {
+  $bhd-mbp-light-primary: mat-palette($mat-bhd-mbp-green, 500);
+  $bhd-mbp-light-accent: mat-palette($mat-bhd-mbp-gray, 500);
+  $bhd-mbp-light-warn: mat-palette($mat-bhd-mbp-red);
+
+  //------------------ LIGHT COLOR PALETTE ---------------------------//
+  $bhd-mbp-light-theme: mat-light-theme(
+    $bhd-mbp-light-primary,
+    $bhd-mbp-light-accent,
+    $bhd-mbp-light-warn
+  );
+  //------------------ DARK COLOR PALETTE ---------------------------//
+  //$bhd-mbp-dark-theme: mat-dark-theme();        ---Color palette => Dark mode
+
+  @include bhd-material-typography();
+  //@include mat-base-typography($bhd-mbp-typography);
+  //@include angular-material-typography($bhd-mbp-typography);
+
+  //------------------- Pages - Theme styles ----------------------------------//
+  @include angular-material-theme($bhd-mbp-light-theme);
+  @include mat-toolbar($hidden);
+  @include mat-raised-button($bhd-mbp-light-theme);
+
+  @include fulfillment-page($platform, $bhd-mbp-light-theme);
+  @include customer-page($platform);
+}
+
+@mixin mbp-ios-theme() {
+  //------------------ LIGHT COLOR PALETTE ---------------------------//
+  //------------------ DARK COLOR PALETTE ---------------------------//
+  //-------------------Pages - Theme styles----------------------------------//
+}

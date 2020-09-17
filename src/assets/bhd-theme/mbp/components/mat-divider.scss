@@ -1,0 +1,13 @@
+@mixin mat-divider($hidden: false) {
+  .mat-divider {
+    @if $hidden {
+      display: none;
+    }
+  }
+
+  .mat-form-field-underline {
+    @if $hidden {
+      display: none;
+    }
+  }
+}

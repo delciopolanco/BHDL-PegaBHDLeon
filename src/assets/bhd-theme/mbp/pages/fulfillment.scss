@@ -1,0 +1,35 @@
+@import "../components/mat-toolbar.scss";
+@import "../components/mat-raised-button.scss";
+@import "../components/mat-card.scss";
+@import "../shared/form-fields.scss";
+
+//Variables
+$hidden: true;
+
+//Page styles
+@mixin fulfillment-page($platform, $theme) {
+  .BHD-BHDCLM-WORK {
+    background-color: #ecedf2;
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+    $showBgCard: false;
+    $showCardHeader: false;
+
+    @include mat-card($showBgCard, $showCardHeader);
+
+    @include form-fields();
+
+    .pega-workitem-main {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    .pega-workitem-item {
+      min-width: 100%;
+    }
+    .pega-workitem-details {
+      min-width: 100%;
+      background-color: #fff;
+    }
+  }
+}

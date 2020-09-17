@@ -1,0 +1,13 @@
+{
+  "appId": "com.pegacap.app",
+  "appName": "pega-ng-cap",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/pega-ng",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

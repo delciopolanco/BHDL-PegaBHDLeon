@@ -1,0 +1,10 @@
+@mixin mat-drawer($theme) {
+  .mat-drawer-container {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    color: mat-color($accent, 900);
+    background-color: mat-color($primary, raised-button);
+  }
+}

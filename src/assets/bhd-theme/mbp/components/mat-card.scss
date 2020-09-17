@@ -1,0 +1,17 @@
+@mixin mat-card($showBg: true, $showHeader: false) {
+  .mat-card {
+    @if $showBg==false {
+      background: none;
+    }
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .mat-card-header {
+    @if $showHeader {
+      background-color: white;
+    } @else {
+      display: none;
+    }
+  }
+}

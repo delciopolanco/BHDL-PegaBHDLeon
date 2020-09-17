@@ -1,0 +1,46 @@
+@import "../components/mat-card.scss";
+@import "../shared/form-fields.scss";
+@import "../components/mat-divider.scss";
+@import "../shared/colors.scss";
+
+@mixin customer-page($platform) {
+  .CABLEC-CABLECON-WORK {
+    background-color: #fff;
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+    $hidden: true;
+    $showBgCard: false;
+    $showCardHeader: false;
+
+    @include mat-card($showBgCard, $showCardHeader);
+    @include mat-divider($hidden);
+
+    .pega-workitem-main {
+      display: flex;
+      flex-direction: column;
+    }
+    .pega-workitem-item {
+      width: 100% !important;
+      & > div {
+        padding: 0 !important;
+        .title__content {
+          background-color: hsl(230, 19%, 94%);
+          padding: 30px;
+          h1 {
+            color: map-get($mat-bhd-mbp-green, 500);
+            margin: 0;
+            padding-bottom: 5px;
+          }
+        }
+        form {
+          padding: 15px;
+          @include form-fields();
+        }
+      }
+    }
+    .pega-workitem-details {
+      display: none;
+    }
+  }
+}

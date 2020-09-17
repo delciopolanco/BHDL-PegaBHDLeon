@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+@import "../shared/colors.scss";
+@import "../shared/typography.scss";
+
+@mixin mat-toolbar($hidden: false) {
+  .mat-toolbar {
+    border-bottom: 2px solid map-get($mat-bhd-mbp-green, 900);
+    font-size: mat-font-size($bhd-mbp-typography, headline);
+    @if $hidden {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@import "./colors.scss";
+@import "./typography.scss";
+
+@mixin form-fields() {
+  .field__select__arrow__shape {
+    position: absolute;
+    right: 5px;
+    z-index: 12;
+    width: 0;
+    height: 0;
+    border-bottom-width: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: map-get($mat-bhd-mbp-green, 500);
+    border-left: 10px solid transparent;
+    bottom: 10px;
+  }
+
+  .mat-input-element,
+  .mat-select {
+    height: 35px;
+    background: #fff;
+    border-radius: 5px;
+    text-indent: 10px;
+    margin-top: 8px;
+    border: 1px solid #cccccc;
+  }
+
+  .mat-select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  .mat-select-value {
+    overflow: unset;
+  }
+
+  .mat-form-field-label {
+    color: map-get($mat-bhd-mbp-gray, 500);
+
+    font-family: mat-font-family($bhd-mbp-typography);
+    font: {
+      size: mat-font-size($bhd-mbp-typography, caption);
+      weight: mat-font-weight($bhd-mbp-typography, caption);
+    }
+  }
+
+  .mat-select-arrow,
+  .mat-form-field-hint-wrapper {
+    display: none;
+  }
+}
