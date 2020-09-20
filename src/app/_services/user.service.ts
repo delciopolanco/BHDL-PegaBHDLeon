@@ -14,16 +14,11 @@ export class UserService {
 
   login(userName: string, password: string) {
     const encodedUser = btoa(userName + ":" + password);
-    const encodePyUser = btoa(environment.PY_USER_IDENTIFIER); //Temporal
 
     let authParams = new HttpParams();
     let authHeaders = new HttpHeaders();
 
-    console.log(encodePyUser);
     authHeaders = authHeaders.append("Authorization", "Basic " + encodedUser);
-    //.append("pyuseridentifier", encodePyUser) //Temporal
-    //.append("userfullname", encodePyUser); //Temporal
-
     localStorage.setItem("userName", userName);
     localStorage.setItem("encodedUser", encodedUser);
 
@@ -31,6 +26,14 @@ export class UserService {
       observe: "response",
       params: authParams,
       headers: authHeaders,
+    });
+  }
+
+  authenticate() {
+    let authParams = new HttpParams();
+    return this.http.get(this.authUrl, {
+      observe: "response",
+      params: authParams,
     });
   }
 }

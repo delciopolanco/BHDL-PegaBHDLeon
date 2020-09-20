@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Themes, Platforms, AppNames } from "../_services/themes";
 import { BehaviorSubject } from "rxjs";
+import { AppNames } from "../_enums/appNames.enum";
+import { Platforms } from "../_enums/platforms.enum";
+import { Themes } from "../_enums/themes.enum";
 
 @Injectable()
 export class ThemeService {

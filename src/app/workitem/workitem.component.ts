@@ -34,6 +34,8 @@ import {
   MAT_DIALOG_DATA,
 } from "@angular/material/dialog";
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { UserService } from "../_services/user.service";
+import { switchMap, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-workitem",
@@ -155,7 +157,8 @@ export class WorkitemComponent implements OnInit {
     private pageinstructions: PageInstructions,
     private localActionDialog: MatDialog,
     private fb: FormBuilder,
-    private psservice: ProgressSpinnerService
+    private psservice: ProgressSpinnerService,
+    private userService: UserService
   ) {
     this.subscription = this.gaservice.getMessage().subscribe((message) => {
       console.log("MESSAGE =>", message);
@@ -241,20 +244,27 @@ export class WorkitemComponent implements OnInit {
 
   ngOnInit() {
     //CAMBIO
-    this.cservice.getCaseExternal().subscribe((response) => {
-      //this.currentCase$ = response.body;
-      const { ID } = response.body;
-      // this.psservice.sendMessage(true);
-      // this.oaservice.sendMessage(
-      //   "BHD-SelfService-BHDCLM-Work-CLM-OnboardNewCust",
-      //   "ASSIGN-WORKLIST BHD-SELFSERVICE-BHDCLM-WORK O-123155!CLIENTVALIDATION"
-      // );
-      this.gaservice.sendMessage(
-        "BHD-SELFSERVICE-BHDCLM-WORK O-123155",
-        "ASSIGN-WORKLIST BHD-SELFSERVICE-BHDCLM-WORK O-123155!CLIENTVALIDATION"
-      );
-      //this.cservice.getCaseTypes().subscribe(); //response.body.ID);
-    });
+    /** this.userService
+      .authenticate()
+      .pipe(
+        switchMap((_) => */
+    // this.cservice
+    //   .getCaseExternal()
+    //   .pipe(
+    //     tap((response) => {
+    //       if (response.ok) {
+    //         this.currentCase$ = response.body;
+    //         console.log("workITEM =>", response);
+    //         debugger;
+    //         const { ID, nextAssignmentID } = response.body;
+    //         this.psservice.sendMessage(true);
+    //         this.oaservice.sendMessage(ID, nextAssignmentID);
+    //         this.gaservice.sendMessage(ID, nextAssignmentID);
+    //         this.cservice.getCaseTypes().subscribe(); //response.body.ID);
+    //       }
+    //     })
+    //   )
+    //   .subscribe();
 
     this.bUseRepeatPageInstructions =
       localStorage.getItem("useRepeatPageInstructions") == "true"

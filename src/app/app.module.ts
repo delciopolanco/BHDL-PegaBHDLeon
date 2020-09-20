@@ -85,6 +85,8 @@ import { ThemeService } from "./_services/theme.service";
 import { ThemeGuard } from "./_guards/theme.guard";
 import { InvocationService } from "./_interceptors/invocation.service";
 import { TempEnrolledGuard } from "./_guards/temp-enrolled.guard";
+import { EncryptDecryptService } from "./_services/encrypt-decrypt.service";
+import { HandleStorageService } from "./_services/handleStorage.service";
 
 const IMPORTS = [
   BrowserModule,
@@ -133,6 +135,8 @@ const PROVIDERS = [
   },
   ReferenceHelper,
   ThemeService,
+  EncryptDecryptService,
+  HandleStorageService,
   ThemeGuard,
   TempEnrolledGuard,
 ];

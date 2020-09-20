@@ -22,7 +22,7 @@ export class CaseService {
     var caseParams = new HttpParams();
     var caseHeaders = new HttpHeaders();
     const encodedUser = localStorage.getItem("encodedUser");
-    const encodePyUser = btoa(environment.PY_USER_IDENTIFIER); //Temporal
+
     const body = {
       caseTypeID: "BHD-SelfService-BHDCLM-Work-CLM-OnboardNewCust",
       processID: "pyStartCase",
@@ -35,17 +35,20 @@ export class CaseService {
           MiddleName: "RAMONA",
           LastName: "BAEZ",
           MaidenName: "RODRIGUEZ",
-          DateOfBirthTxt: "07/23/1996",
+          DateOfBirthTxt: "05/23/1996",
+          NationalityCode: "1",
           Nationality: "República Dominicana",
-          Gender: "Female",
+          Gender: "Femenino",
           CityOfBirth: "República Dominicana",
-          MaritalStatus: "Single",
+          MaritalStatus: "Soltero",
+          BirthCountryCode: "DO",
           CountryOfBirth: "República Dominicana",
           PhoneNumber: "1234567891",
           pyEmailAddress: "david.guzman.arenales@gt.ey.com",
-          pyProductName: "Savings Account",
-          pyChannel: "Mobile",
-          DeviceID: "Dell Latitude 5400",
+          ProductID: "TBD",
+          pyProductName: "Cuenta de ahorros digital",
+          pyChannel: "MBP",
+          DeviceID: "20013fea6bcc820c",
           CaseType: "Digital Onboarding Customer",
         },
       },
@@ -54,9 +57,7 @@ export class CaseService {
     caseHeaders = caseHeaders
       .append("Authorization", "Basic " + encodedUser)
       .append("Content-Type", "application/json")
-      .append("Access-Control-Expose-Headers", "etag")
-      .append("pyuseridentifier", encodePyUser) //Temporal
-      .append("userfullname", encodePyUser); //Temporal
+      .append("Access-Control-Expose-Headers", "etag");
 
     return this.http.post<{
       ID: string;
@@ -81,8 +82,6 @@ export class CaseService {
       .append("Authorization", "Basic " + encodedUser)
       .append("Content-Type", "application/json")
       .append("Access-Control-Expose-Headers", "etag");
-    //.append("pyuseridentifier", encodePyUser) //Temporal
-    //.append("userfullname", encodePyUser); //Temporal
 
     return this.http.get(this.caseUrl + "/" + id, {
       observe: "response",
