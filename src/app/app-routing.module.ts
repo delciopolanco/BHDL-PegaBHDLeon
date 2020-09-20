@@ -7,15 +7,15 @@ import { AppComponent } from "./app.component";
 import { WorklistComponent } from "./worklist/worklist.component";
 
 const routes: Routes = [
-  // {
-  //   path: "data/:app/:platform",
-  //   component: WorkitemComponent,
-  //   canActivate: [ThemeGuard, TempEnrolledGuard],
-  // },
+  {
+    path: "data/:app/:platform",
+    component: WorkitemComponent,
+    canActivate: [ThemeGuard, TempEnrolledGuard],
+  },
   {
     path: "",
     canActivate: [ThemeGuard, TempEnrolledGuard],
-    component: WorklistComponent,
+    component: AppComponent,
   },
 ];
 

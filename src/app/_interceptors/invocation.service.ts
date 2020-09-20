@@ -23,7 +23,9 @@ export class InvocationService implements HttpInterceptor {
     private handleStorageService: HandleStorageService
   ) {}
 
+  basicReq: BasicRequest;
   header: HttpHeaders = null;
+  bodyToEncrypt: string = "";
 
   intercept(
     req: HttpRequest<any>,
@@ -32,6 +34,8 @@ export class InvocationService implements HttpInterceptor {
     console.log("Interceptor Http initialized!");
     console.log("-----------------------------------------------------");
     let cloneRequest = null;
+    let body;
+
     const headers = this.getHeaders();
     console.log(`-----URL=>  ${req.url}---------------`);
     switch (req.method) {
@@ -62,18 +66,28 @@ export class InvocationService implements HttpInterceptor {
         });
         break;
       case HttpMethod.POST:
-        const basicReq = this.getBasicRequest(req.body);
-        const bodyToEncrypt = JSON.stringify({ ...basicReq });
-        const body = {
-          data: this.encryptDecryptService.encrypt(bodyToEncrypt),
+        this.basicReq = this.getBasicRequest(req.body);
+        this.bodyToEncrypt = JSON.stringify({ ...this.basicReq });
+        body = {
+          data: this.encryptDecryptService.encrypt(this.bodyToEncrypt),
         };
-        console.log("Req  --->", basicReq);
+        console.log("Req  --->", this.basicReq);
         cloneRequest = req.clone({
           headers,
           body,
         });
         break;
       case HttpMethod.PUT:
+        this.basicReq = this.getBasicRequest(req.body);
+        this.bodyToEncrypt = JSON.stringify({ ...this.basicReq });
+        body = {
+          data: this.encryptDecryptService.encrypt(this.bodyToEncrypt),
+        };
+        console.log("Req  --->", this.basicReq);
+        cloneRequest = req.clone({
+          headers,
+          body,
+        });
         break;
       case HttpMethod.DELETE:
         break;

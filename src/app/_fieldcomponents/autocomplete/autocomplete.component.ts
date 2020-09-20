@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { FormGroup, ValidatorFn } from "@angular/forms";
 import { FormControl, Validators } from "@angular/forms";
 import { GetChangesService } from "../../_messages/getchanges.service";
 import { interval } from "rxjs/internal/observable/interval";
@@ -10,6 +10,7 @@ import { map, startWith } from "rxjs/operators";
 import { ReferenceHelper } from "../../_helpers/reference-helper";
 import { GetCaseService } from "../../_messages/getcase.service";
 import { Subscription, Observable, of } from "rxjs";
+import { FieldValidatorsService } from "src/app/_services/fieldvalidations.service";
 
 export interface CompleteOptions {
   key: string;
@@ -27,6 +28,7 @@ export class AutocompleteComponent implements OnInit {
   @Input() noLabel: boolean;
   @Input() CaseID: string;
   @Input() RefType$: string;
+  @Input() validations: ValidatorFn[];
 
   filteredOptions: Observable<CompleteOptions[]>;
 
@@ -47,6 +49,7 @@ export class AutocompleteComponent implements OnInit {
   constructor(
     private gchservice: GetChangesService,
     private gaservice: GetActionsService,
+    private fieldValidation: FieldValidatorsService,
     private dpservice: DatapageService,
     private refHelper: ReferenceHelper,
     private gcservice: GetCaseService
@@ -57,7 +60,7 @@ export class AutocompleteComponent implements OnInit {
   ngOnInit() {
     this.selectedValue = this.fieldComp.value;
     this.reference = this.fieldComp.reference;
-
+    this.fieldControl.setValidators(this.validations);
     this.fieldComp.label = this.refHelper.htmlDecode(this.fieldComp.label);
     this.tooltip$ = "";
     if (this.fieldComp.control.modes.length > 0) {
@@ -121,7 +124,7 @@ export class AutocompleteComponent implements OnInit {
         let pPage = null;
         let dpParams = this.fieldComp.control.modes[0].dataPageParams;
 
-        if (dpParams.length > 0) {
+        if (dpParams && dpParams.length > 0) {
           pPage = new Object();
 
           for (let i in dpParams) {
@@ -314,6 +317,7 @@ export class AutocompleteComponent implements OnInit {
   }
 
   fieldClick(e) {
+    debugger;
     this.actionsHandler.generateActions(
       "click",
       this.fieldComp.control.actionSets,
@@ -323,19 +327,26 @@ export class AutocompleteComponent implements OnInit {
   }
 
   getErrorMessage() {
-    let errMessage: string = "";
-
-    // look for validation messages for json, pre-defined or just an error pushed from workitem (400)
-    if (this.fieldControl.hasError("message")) {
-      errMessage = this.fieldComp.validationMessages;
-    } else if (this.fieldControl.hasError("required")) {
-      errMessage = "You must enter a value";
-    } else if (this.fieldControl.errors) {
-      errMessage = this.fieldControl.errors.toString();
-    }
-
-    return errMessage;
+    return this.fieldValidation.getValidationError(
+      this.fieldComp.label,
+      this.fieldControl,
+      this.formGroup
+    );
   }
+  // getErrorMessage() {
+  //   let errMessage: string = "";
+
+  //   // look for validation messages for json, pre-defined or just an error pushed from workitem (400)
+  //   if (this.fieldControl.hasError("message")) {
+  //     errMessage = this.fieldComp.validationMessages;
+  //   } else if (this.fieldControl.hasError("required")) {
+  //     errMessage = "You must enter a value";
+  //   } else if (this.fieldControl.errors) {
+  //     errMessage = this.fieldControl.errors.toString();
+  //   }
+
+  //   return errMessage;
+  // }
 
   private _filterOptions(value: string): CompleteOptions[] {
     const filterValue = value.toLowerCase();

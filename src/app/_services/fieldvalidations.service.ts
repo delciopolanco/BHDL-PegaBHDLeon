@@ -19,32 +19,34 @@ export class FieldValidatorsService {
         label,
         formGroup.controls
       ).shift();
+      debugger;
       if (error) {
+        console.log({ error });
         let text;
         switch (error.error_name) {
           case "required":
-            text = `${error.control_name} is required!`;
+            text = `El dato ingresado es requerido!`;
             break;
           case "pattern":
-            text = `${error.control_name} has wrong pattern!`;
+            text = `El dato ingresado no posee un patrón correcto!`;
             break;
           case "email":
-            text = `${error.control_name} has wrong email format!`;
+            text = `El dato ingresado tiene un formato de correo electrónico equivocado!`;
             break;
           case "min":
-            text = `${error.control_name} must be greater than ${error.error_value.min}`;
+            text = `El dato ingresado debe ser mayor que ${error.error_value.min}`;
             break;
           case "max":
-            text = `${error.control_name} must be less than ${error.error_value.max}`;
+            text = `El dato ingresado debe ser menor que ${error.error_value.max}`;
             break;
           case "minlength":
-            text = `${error.control_name} must be at least: ${error.error_value.requiredLength} characters long`;
+            text = `El dato ingresado debe tener al menos : ${error.error_value.requiredLength} caracteres de largo`;
             break;
           case "maxlength":
-            text = `${error.control_name} is too long (maximum is ${error.error_value.requiredLength} characters)`;
+            text = `El dato ingresado es muy largo ( maximo: ${error.error_value.requiredLength} caracteres)`;
             break;
           case "areEqual":
-            text = `${error.control_name} must be equal!`;
+            text = `El dato ingresado debe de ser igual!`;
             break;
           default:
             text = `${error.control_name}: ${error.error_name}: ${error.error_value}`;
@@ -133,19 +135,19 @@ export class FieldValidatorsService {
       "max",
       "formatType", // can be number, email, date ...
     ];
+    let fieldProps = { ...fieldComp };
 
-    const editableModes = fieldComp.control.modes[0];
-    const fieldProps = {
-      ...fieldComp,
-      ...editableModes,
-    };
-
-    if (editableModes.formatType === "number") {
-      fieldProps.min = editableModes.minChars;
-      fieldProps.max = editableModes.maxChars;
-      fieldProps.minChars = 0;
-      fieldProps.maxChars = 0;
+    if (fieldComp && fieldComp.control && fieldComp.control.modes) {
+      const editableModes = fieldComp.control.modes[0];
+      fieldProps = { ...fieldProps, ...editableModes };
+      if (editableModes.formatType === "number") {
+        fieldProps.min = editableModes.minChars;
+        fieldProps.max = editableModes.maxChars;
+        fieldProps.minChars = 0;
+        fieldProps.maxChars = 0;
+      }
     }
+
     const fieldValidationsArray = Object.entries(fieldProps).map((e) => ({
       name: e[0],
       value: e[1],

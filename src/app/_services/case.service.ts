@@ -4,6 +4,7 @@ import { endpoints } from "./endpoints";
 import { ReferenceHelper } from "../_helpers/reference-helper";
 import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 import { environment } from "src/environments/environment";
+import { Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +19,7 @@ export class CaseService {
 
   pxResults: Object;
 
-  getCaseExternal() {
+  getCaseExternal(): Observable<Resp> {
     var caseParams = new HttpParams();
     var caseHeaders = new HttpHeaders();
     const encodedUser = localStorage.getItem("encodedUser");
@@ -54,21 +55,30 @@ export class CaseService {
       },
     };
 
-    caseHeaders = caseHeaders
-      .append("Authorization", "Basic " + encodedUser)
-      .append("Content-Type", "application/json")
-      .append("Access-Control-Expose-Headers", "etag");
+    // caseHeaders = caseHeaders
+    //   .append("Authorization", "Basic " + encodedUser)
+    //   .append("Content-Type", "application/json")
+    //   .append("Access-Control-Expose-Headers", "etag");
 
-    return this.http.post<{
-      ID: string;
-      nextAssignmentID: string;
-      nextPageID: string;
-      pxObjClass: string;
-    }>(endpoints.BASEURL + endpoints.CASES, body, {
-      observe: "response",
-      params: caseParams,
-      headers: caseHeaders,
-    });
+    // return this.http.post<{
+    //   ID: string;
+    //   nextAssignmentID: string;
+    //   nextPageID: string;
+    //   pxObjClass: string;
+    // }>(endpoints.BASEURL + endpoints.CASES, body, {
+    //   observe: "response",
+    //   params: caseParams,
+    //   headers: caseHeaders,
+    // });
+    const mockResp: Resp = {
+      body: {
+        ID: "BHD-SELFSERVICE-BHDCLM-WORK O-174009",
+        nextAssignmentID: "",
+        nextPageID: "",
+        pxObjClass: "",
+      },
+    };
+    return of(mockResp);
   }
 
   // get a case of given id
@@ -76,7 +86,6 @@ export class CaseService {
     var caseParams = new HttpParams();
     var caseHeaders = new HttpHeaders();
     const encodedUser = localStorage.getItem("encodedUser");
-    const encodePyUser = btoa(environment.PY_USER_IDENTIFIER); //Temporal
 
     caseHeaders = caseHeaders
       .append("Authorization", "Basic " + encodedUser)
@@ -243,4 +252,8 @@ export class CaseService {
       headers: caseHeaders,
     });
   }
+}
+
+interface Resp {
+  body: any;
 }

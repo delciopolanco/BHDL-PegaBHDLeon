@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from "@angular/core";
+import { Component, OnInit, ViewChild, Inject, Input } from "@angular/core";
 import { Subscription, Observable, of } from "rxjs";
 import { GetAssignmentService } from "../_messages/getassignment.service";
 import { GetViewService } from "../_messages/getview.service";
@@ -35,7 +35,11 @@ import {
 } from "@angular/material/dialog";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { UserService } from "../_services/user.service";
-import { switchMap, tap } from "rxjs/operators";
+import { map, pluck, switchMap, tap } from "rxjs/operators";
+import { DatapageService } from "../_services/datapage.service";
+import { HttpParams } from "@angular/common/http";
+import { flatMap } from "lodash";
+import { ThemeService } from "../_services/theme.service";
 
 @Component({
   selector: "app-workitem",
@@ -55,6 +59,7 @@ export class WorkitemComponent implements OnInit {
   @ViewChild(TopviewComponent) tvComp: TopviewComponent;
   @ViewChild(ToppageComponent) tpComp: ToppageComponent;
 
+  isPlatformMobile: boolean;
   message: any;
   subscription: Subscription;
 
@@ -158,7 +163,9 @@ export class WorkitemComponent implements OnInit {
     private localActionDialog: MatDialog,
     private fb: FormBuilder,
     private psservice: ProgressSpinnerService,
-    private userService: UserService
+    private userService: UserService,
+    private datapage: DatapageService,
+    private themeService: ThemeService
   ) {
     this.subscription = this.gaservice.getMessage().subscribe((message) => {
       console.log("MESSAGE =>", message);
@@ -242,29 +249,40 @@ export class WorkitemComponent implements OnInit {
       });
   }
 
+  getCaseIdByRefObject(refObject) {
+    return refObject.split(" ")[1];
+  }
   ngOnInit() {
-    //CAMBIO
-    /** this.userService
+    const workItem$ = this.cservice.getCaseExternal().pipe(
+      switchMap((caseResult) => {
+        const worklistParams = new HttpParams().set("Work", "true");
+        return this.datapage.getDataPage("D_Worklist", worklistParams).pipe(
+          map((response) => response.body),
+          pluck("pxResults"),
+          tap((worklist: []) => {
+            const workItemAssigment = worklist.filter(
+              (item) => item["pxRefObjectKey"] === caseResult.body.ID //"BHD-SELFSERVICE-BHDCLM-WORK O-174009"
+            )[0];
+            if (workItemAssigment) {
+              console.log("WORKITEM =>", workItemAssigment);
+              const CASE_ID = this.getCaseIdByRefObject(caseResult.body.ID);
+              this.gaservice.sendMessage(CASE_ID, workItemAssigment);
+            }
+          })
+        );
+      })
+    );
+    const auth$ = this.userService
       .authenticate()
-      .pipe(
-        switchMap((_) => */
-    // this.cservice
-    //   .getCaseExternal()
-    //   .pipe(
-    //     tap((response) => {
-    //       if (response.ok) {
-    //         this.currentCase$ = response.body;
-    //         console.log("workITEM =>", response);
-    //         debugger;
-    //         const { ID, nextAssignmentID } = response.body;
-    //         this.psservice.sendMessage(true);
-    //         this.oaservice.sendMessage(ID, nextAssignmentID);
-    //         this.gaservice.sendMessage(ID, nextAssignmentID);
-    //         this.cservice.getCaseTypes().subscribe(); //response.body.ID);
-    //       }
-    //     })
-    //   )
-    //   .subscribe();
+      .pipe(switchMap((_) => workItem$));
+
+    const theme$ = this.themeService.theme$.pipe(
+      tap((data) => (this.isPlatformMobile = data !== null)),
+      map((data) => data !== null),
+      switchMap((isPlatformMobile) => (isPlatformMobile ? auth$ : null))
+    );
+
+    this.subscription.add(theme$.subscribe());
 
     this.bUseRepeatPageInstructions =
       localStorage.getItem("useRepeatPageInstructions") == "true"
@@ -752,7 +770,11 @@ export class WorkitemComponent implements OnInit {
 
             // add etag to the data
             //this.updateState("etag", response.headers.get("etag").replace(/\"/gi, ''));
-            this.etag = response.headers.get("etag").replace(/\"/gi, "");
+
+            let etagHeader = response.headers.get("etag");
+            if (etagHeader) {
+              this.etag = etagHeader.replace(/\"/gi, "");
+            }
 
             this.gcservice.sendMessage(this.currentCase$);
             //let timer = interval(100).subscribe(() => {
@@ -833,7 +855,10 @@ export class WorkitemComponent implements OnInit {
 
         // add etag to the data
         //this.updateState("etag", response.headers.get("etag").replace(/\"/gi, ''));
-        this.etag = response.headers.get("etag").replace(/\"/gi, "");
+        let etagHeader = response.headers.get("etag");
+        if (etagHeader) {
+          this.etag = etagHeader.replace(/\"/gi, "");
+        }
 
         this.cdref.detectChanges();
 

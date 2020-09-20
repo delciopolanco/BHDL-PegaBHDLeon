@@ -58,12 +58,12 @@
     </mat-drawer>
     <mat-drawer-content>
       <app-maintabs *ngIf="bLoggedIn == true"></app-maintabs>
-      <!-- <app-maintabs></app-maintabs> -->
     </mat-drawer-content>
   </mat-drawer-container>
   <app-login *ngIf="bLoggedIn == false"></app-login>
 </ng-template>
 
 <ng-template #routing>
+  <!-- <app-maintabs></app-maintabs> -->
   <router-outlet></router-outlet>
 </ng-template>
