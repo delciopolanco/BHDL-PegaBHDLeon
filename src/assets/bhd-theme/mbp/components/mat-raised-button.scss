@@ -3,8 +3,14 @@
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
-
-    color: mat-color($accent, 900);
+    text-transform: uppercase;
+    color: mat-color($accent, 300);
     background-color: mat-color($primary, raised-button);
+    box-shadow: none !important;
+
+    &.mat-primary {
+      color: mat-color($primary, 500) !important;
+      background: none !important;
+    }
   }
 }

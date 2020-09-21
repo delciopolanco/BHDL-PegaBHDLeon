@@ -3,9 +3,9 @@ import * as uuid from "uuid";
 import * as Forge from "node-forge";
 import * as CryptoJS from "crypto-js";
 import { HandleStorageService } from "./handleStorage.service";
-import { IApiSecurity } from "../_models/apiSecurity.model";
-import { APISecurity } from "../_models/iApiSecurity.model";
-import { GeneratedUUID } from "../_models/generateUUID.model";
+import { IApiSecurity } from "../../_models/apiSecurity.model";
+import { APISecurity } from "../../_models/iApiSecurity.model";
+import { GeneratedUUID } from "../../_models/generateUUID.model";
 
 Forge.options.usePureJavaScript = true;
 const PKI = Forge.pki;
@@ -44,8 +44,7 @@ export class EncryptDecryptService {
 
       console.log(credentials);
       this._securityData = enrolling ? new APISecurity() : credentials;
-      //const localUUID = uuid.v1().split("-").join("");
-      const localUUID = "fe7d26ce8cac4ce6a945e90c35c7c201";
+      const localUUID = uuid.v1().split("-").join("");
       const decodeCert = atob(this._securityData.x509cert);
       const certificate = PKI.certificateFromPem(decodeCert);
       const encrypted = certificate.publicKey.encrypt(localUUID, "RSA-OAEP", {
@@ -61,6 +60,7 @@ export class EncryptDecryptService {
   }
 
   public encrypt(plainText: string): string {
+    console.log(this.uuid);
     const iv = CryptoJS.lib.WordArray.create(
       this._uuid.key.substring(0, 16)
     ).toString();

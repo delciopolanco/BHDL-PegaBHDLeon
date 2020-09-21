@@ -1,6 +1,7 @@
 @import "../components/mat-card.scss";
 @import "../shared/form-fields.scss";
 @import "../components/mat-divider.scss";
+@import "../components/mat-radio-button.scss";
 @import "../shared/colors.scss";
 
 @mixin customer-page($platform) {
@@ -15,7 +16,6 @@
 
     @include mat-card($showBgCard, $showCardHeader);
     @include mat-divider($hidden);
-
     .pega-workitem-main {
       display: flex;
       flex-direction: column;
@@ -27,6 +27,7 @@
         .title__content {
           background-color: hsl(230, 19%, 94%);
           padding: 30px;
+          text-align: center;
           h1 {
             color: map-get($mat-bhd-mbp-green, 500);
             margin: 0;

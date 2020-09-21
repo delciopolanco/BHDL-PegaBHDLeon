@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ThemeGuard } from "./_guards/theme.guard";
+import { ThemeGuard } from "./__bhd__/_guards/theme.guard";
 import { WorkitemComponent } from "./workitem/workitem.component";
-import { TempEnrolledGuard } from "./_guards/temp-enrolled.guard";
+import { TempEnrolledGuard } from "./__bhd__/_guards/temp-enrolled.guard";
 import { AppComponent } from "./app.component";
 import { WorklistComponent } from "./worklist/worklist.component";
 

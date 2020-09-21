@@ -39,6 +39,7 @@ $platform_ios: "IOS";
   @include angular-material-theme($bhd-mbp-light-theme);
   @include mat-toolbar($hidden);
   @include mat-raised-button($bhd-mbp-light-theme);
+  @include mat-radio-button($bhd-mbp-light-theme);
 
   @include fulfillment-page($platform, $bhd-mbp-light-theme);
   @include customer-page($platform);

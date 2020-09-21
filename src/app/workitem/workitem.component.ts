@@ -39,7 +39,7 @@ import { map, pluck, switchMap, tap } from "rxjs/operators";
 import { DatapageService } from "../_services/datapage.service";
 import { HttpParams } from "@angular/common/http";
 import { flatMap } from "lodash";
-import { ThemeService } from "../_services/theme.service";
+import { ThemeService } from "../__bhd__/_services/theme.service";
 
 @Component({
   selector: "app-workitem",

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { IStorage } from "../_models/iStorage.model";
+import { IStorage } from "../../_models/iStorage.model";
 
 @Injectable()
 export class HandleStorageService implements IStorage {

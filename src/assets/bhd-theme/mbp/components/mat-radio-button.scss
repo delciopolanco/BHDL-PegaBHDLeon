@@ -1,0 +1,21 @@
+@mixin mat-radio-button($theme, $show: true) {
+  .mat-radio-button {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .mat-radio-inner-circle {
+      background-color: #fff !important;
+    }
+    &.mat-accent.mat-radio-checked {
+      .mat-radio-outer-circle {
+        border-color: mat-color($primary, 500) !important;
+        background-color: mat-color($primary, 500) !important;
+      }
+    }
+
+    @if $show==false {
+      display: none;
+    }
+  }
+}

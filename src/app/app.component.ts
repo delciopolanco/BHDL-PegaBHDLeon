@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { tap } from "rxjs/operators";
-import { ThemeService } from "./_services/theme.service";
+import { ThemeService } from "./__bhd__/_services/theme.service";
 
 @Component({
   selector: "app-root",

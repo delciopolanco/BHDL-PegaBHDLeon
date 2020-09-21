@@ -81,12 +81,13 @@ import { RecentlistComponent } from "./_subcomponents/recentlist/recentlist.comp
 import { NumberComponent } from "./_fieldcomponents/number/number.component";
 import { NosupportComponent } from "./_fieldcomponents/nosupport/nosupport.component";
 import { ReferenceHelper } from "./_helpers/reference-helper";
-import { ThemeService } from "./_services/theme.service";
-import { ThemeGuard } from "./_guards/theme.guard";
-import { InvocationService } from "./_interceptors/invocation.service";
-import { TempEnrolledGuard } from "./_guards/temp-enrolled.guard";
-import { EncryptDecryptService } from "./_services/encrypt-decrypt.service";
-import { HandleStorageService } from "./_services/handleStorage.service";
+import { ThemeService } from "./__bhd__/_services/theme.service";
+import { ThemeGuard } from "./__bhd__/_guards/theme.guard";
+import { InvocationService } from "./__bhd__/_interceptors/invocation.service";
+import { TempEnrolledGuard } from "./__bhd__/_guards/temp-enrolled.guard";
+import { EncryptDecryptService } from "./__bhd__/_services/encrypt-decrypt.service";
+import { HandleStorageService } from "./__bhd__/_services/handleStorage.service";
+import { BhdModule } from "./__bhd__/bhd.module";
 
 const IMPORTS = [
   BrowserModule,
@@ -121,6 +122,7 @@ const IMPORTS = [
   MatAutocompleteModule,
   MatTooltipModule,
   MatDialogModule,
+  BhdModule,
 ];
 const PROVIDERS = [
   { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: "auto" } },

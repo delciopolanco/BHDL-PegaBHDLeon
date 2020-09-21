@@ -13,7 +13,7 @@ import { EncryptDecryptService } from "../_services/encrypt-decrypt.service";
 import { HandleStorageService } from "../_services/handleStorage.service";
 import * as uuid from "uuid";
 import { HttpMethod } from "../_enums/httpMethods.enum";
-import { BasicRequest } from "../_models/BasicRequest.model";
+import { BasicRequest } from "../../_models/BasicRequest.model";
 import { map } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
@@ -56,12 +56,17 @@ export class InvocationService implements HttpInterceptor {
 
         console.log({ tempParam });
         const encode = encodeURIComponent(tempParam);
+        const params = new HttpParams({
+          fromObject: {
+            data: encode,
+          },
+        });
         console.log({ encode });
 
-        url = url + "?" + encode;
+        //url = url + "?" + encode;
         cloneRequest = req.clone({
           headers,
-          params: new HttpParams(),
+          params,
           url,
         });
         break;

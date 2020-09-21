@@ -10,7 +10,7 @@ import { map, startWith } from "rxjs/operators";
 import { ReferenceHelper } from "../../_helpers/reference-helper";
 import { GetCaseService } from "../../_messages/getcase.service";
 import { Subscription, Observable, of } from "rxjs";
-import { FieldValidatorsService } from "src/app/_services/fieldvalidations.service";
+import { FieldValidatorsService } from "src/app/__bhd__/_services/fieldvalidations.service";
 
 export interface CompleteOptions {
   key: string;
@@ -317,7 +317,6 @@ export class AutocompleteComponent implements OnInit {
   }
 
   fieldClick(e) {
-    debugger;
     this.actionsHandler.generateActions(
       "click",
       this.fieldComp.control.actionSets,

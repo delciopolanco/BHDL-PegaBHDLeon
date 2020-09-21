@@ -19,9 +19,7 @@ export class FieldValidatorsService {
         label,
         formGroup.controls
       ).shift();
-      debugger;
       if (error) {
-        console.log({ error });
         let text;
         switch (error.error_name) {
           case "required":

@@ -9,7 +9,7 @@ import { interval } from "rxjs/internal/observable/interval";
 import { HandleActions } from "../../_actions/handleactions";
 import { GetActionsService } from "../../_messages/getactions.service";
 import { ReferenceHelper } from "../../_helpers/reference-helper";
-import { FieldValidatorsService } from "src/app/_services/fieldvalidations.service";
+import { FieldValidatorsService } from "src/app/__bhd__/_services/fieldvalidations.service";
 
 @Component({
   selector: "app-textinput",
