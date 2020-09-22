@@ -63,7 +63,6 @@ export class InvocationService implements HttpInterceptor {
         });
         console.log({ encode });
 
-        //url = url + "?" + encode;
         cloneRequest = req.clone({
           headers,
           params,

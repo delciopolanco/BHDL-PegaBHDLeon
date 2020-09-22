@@ -18,7 +18,7 @@ export class TempEnrolledGuard implements CanActivate {
     //   !theme //&&
     //   //(theme.platform === Platforms.ANDROID || theme.platform === Platforms.IOS)
     // ) {
-    this.setCredentialsToLocalStorage();
+    this.setCredentialsToLocalStorage(route);
     // } else {
     //   this.removeCredentialsFromLocalStorage();
     // }
@@ -44,9 +44,10 @@ export class TempEnrolledGuard implements CanActivate {
       ]);
     }
   };
-  setCredentialsToLocalStorage = async () => {
-    const jwt =
-      "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZDQkMtSFM1MTIifQ.JfL5YemY77SIAn8unSrg0OEhKJoxyAI4bLoMfos5ZYwm89cAGWI1c-eVOdU8V1NjGTreAgEKVHcJD2mut8rkTczFnoOK0C1yhTscCnMRWewJpQfIjPGu-VGl9lQ3cbdkDawzdVs4jHGxQCbO-ai0EyLS8v0NWAYNzhrpcvr7HfcKBgZM4__Q6VvNE5MivR2k7vhU5YNPNPpE0RZG8V2zkc4Q0d4Sf1oWyzIAgeoZn6KDPIh3hUBOpw5xOg-ucGxXlLm2jdwMb3xqhaDth0Vw-4okUoMZS47ea7yEZXoFifnnaHhQfP5nktscQTjjHR065HeWTT0rDRPKrUvx5Lhrvg.T7YDUBztV5I-PTVMoiB9cg.IIfwDWOFazDXBRJx4S-6s84fUHE_zVeLarKmpwmrqCNyxZdF3uPHpb0KEmcZCeeD_syO_r0X-l7AGKu6KKIm_SW4WJDsOJ9-4BouQwQbfXbG3me8uaWzhKktZ2WWYtHPD3jlLb-PB81JQhNQyo6ZefFNa7LgJI2azGyt81s0ZbDeN2rYEVKEmDE1E_YDeqc9hEOdWgKpwerteg7Lxl28yP4rSbhgkp26j5wUIr6IZbUI6RO63-OrW1ZO3t_B7GoGrOeh-w_l5YqxyACQswqaBg.ybrr94_QT2PQvmfCMhjXK9PGYyPZCHh4jFJZdWzzVb4";
+  setCredentialsToLocalStorage = async (route) => {
+    const jwt = route.params["jwt"];
+    //"eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZDQkMtSFM1MTIifQ.JfL5YemY77SIAn8unSrg0OEhKJoxyAI4bLoMfos5ZYwm89cAGWI1c-eVOdU8V1NjGTreAgEKVHcJD2mut8rkTczFnoOK0C1yhTscCnMRWewJpQfIjPGu-VGl9lQ3cbdkDawzdVs4jHGxQCbO-ai0EyLS8v0NWAYNzhrpcvr7HfcKBgZM4__Q6VvNE5MivR2k7vhU5YNPNPpE0RZG8V2zkc4Q0d4Sf1oWyzIAgeoZn6KDPIh3hUBOpw5xOg-ucGxXlLm2jdwMb3xqhaDth0Vw-4okUoMZS47ea7yEZXoFifnnaHhQfP5nktscQTjjHR065HeWTT0rDRPKrUvx5Lhrvg.T7YDUBztV5I-PTVMoiB9cg.IIfwDWOFazDXBRJx4S-6s84fUHE_zVeLarKmpwmrqCNyxZdF3uPHpb0KEmcZCeeD_syO_r0X-l7AGKu6KKIm_SW4WJDsOJ9-4BouQwQbfXbG3me8uaWzhKktZ2WWYtHPD3jlLb-PB81JQhNQyo6ZefFNa7LgJI2azGyt81s0ZbDeN2rYEVKEmDE1E_YDeqc9hEOdWgKpwerteg7Lxl28yP4rSbhgkp26j5wUIr6IZbUI6RO63-OrW1ZO3t_B7GoGrOeh-w_l5YqxyACQswqaBg.ybrr94_QT2PQvmfCMhjXK9PGYyPZCHh4jFJZdWzzVb4";
+
     const deviceId = "4fdf68d2-3c72-4713-912c-458a78079999";
     const credentials = {
       clientId: "7e78d60a-0a11-42f0-8672-f8e87e5d1bfc",

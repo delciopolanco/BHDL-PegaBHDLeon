@@ -8,7 +8,7 @@ import { WorklistComponent } from "./worklist/worklist.component";
 
 const routes: Routes = [
   {
-    path: "data/:app/:platform",
+    path: "data/:app/:platform/:jwt",
     component: WorkitemComponent,
     canActivate: [ThemeGuard, TempEnrolledGuard],
   },
