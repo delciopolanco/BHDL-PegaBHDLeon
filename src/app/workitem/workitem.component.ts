@@ -264,7 +264,6 @@ export class WorkitemComponent implements OnInit {
               (item) => item["pxRefObjectKey"] === caseResult.body.ID //"BHD-SELFSERVICE-BHDCLM-WORK O-174009"
             )[0];
             if (workItemAssigment) {
-              console.log("WORKITEM =>", workItemAssigment);
               const CASE_ID = this.getCaseIdByRefObject(caseResult.body.ID);
               this.gaservice.sendMessage(CASE_ID, workItemAssigment);
             }
@@ -272,14 +271,12 @@ export class WorkitemComponent implements OnInit {
         );
       })
     );
-    const auth$ = this.userService
-      .authenticate()
-      .pipe(switchMap((_) => workItem$));
 
     const theme$ = this.themeService.theme$.pipe(
       tap((data) => (this.isPlatformMobile = data !== null)),
+      tap((data) => console.log("SE ESTA LLAMANDO EL TEMA")),
       map((data) => data !== null),
-      switchMap((isPlatformMobile) => (isPlatformMobile ? auth$ : null))
+      switchMap((isPlatformMobile) => (isPlatformMobile ? workItem$ : null))
     );
 
     this.subscription.add(theme$.subscribe());

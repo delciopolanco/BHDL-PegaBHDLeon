@@ -5,6 +5,9 @@ import { ReferenceHelper } from "../_helpers/reference-helper";
 import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 import { environment } from "src/environments/environment";
 import { Observable, of } from "rxjs";
+import { tap } from "rxjs/internal/operators/tap";
+import { map } from "lodash";
+import { switchMap } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -19,7 +22,7 @@ export class CaseService {
 
   pxResults: Object;
 
-  getCaseExternal(): Observable<Resp> {
+  getCaseExternal() {
     var caseParams = new HttpParams();
     var caseHeaders = new HttpHeaders();
     const encodedUser = localStorage.getItem("encodedUser");
@@ -30,7 +33,7 @@ export class CaseService {
       content: {
         CasesServiceRequestData: {
           PrimaryIDType: "Identity card",
-          PrimaryIDValue: "00116179508",
+          PrimaryIDValue: "22301022428",
           IdExpirationDateTxt: "09/30/2020",
           FirstName: "YELINETT",
           MiddleName: "RAMONA",
@@ -41,7 +44,7 @@ export class CaseService {
           Nationality: "República Dominicana",
           Gender: "Femenino",
           CityOfBirth: "República Dominicana",
-          MaritalStatus: "Soltero",
+          MaritalStatus: "Soltero/A",
           BirthCountryCode: "DO",
           CountryOfBirth: "República Dominicana",
           PhoneNumber: "1234567891",
@@ -54,31 +57,26 @@ export class CaseService {
         },
       },
     };
+    caseHeaders = caseHeaders
+      .append("Authorization", "Basic " + encodedUser)
+      .append("Content-Type", "application/json")
+      .append("Access-Control-Expose-Headers", "etag");
 
-    // caseHeaders = caseHeaders
-    //   .append("Authorization", "Basic " + encodedUser)
-    //   .append("Content-Type", "application/json")
-    //   .append("Access-Control-Expose-Headers", "etag");
-
-    // return this.http.post<{
-    //   ID: string;
-    //   nextAssignmentID: string;
-    //   nextPageID: string;
-    //   pxObjClass: string;
-    // }>(endpoints.BASEURL + endpoints.CASES, body, {
-    //   observe: "response",
-    //   params: caseParams,
-    //   headers: caseHeaders,
-    // });
-    const mockResp: Resp = {
-      body: {
-        ID: "BHD-SELFSERVICE-BHDCLM-WORK O-174009",
-        nextAssignmentID: "",
-        nextPageID: "",
-        pxObjClass: "",
-      },
-    };
-    return of(mockResp);
+    return this.http
+      .post<{
+        ID: string;
+        nextAssignmentID: string;
+        nextPageID: string;
+        pxObjClass: string;
+      }>(endpoints.BASEURL + endpoints.CASES, body, {
+        observe: "response",
+        params: caseParams,
+        headers: caseHeaders,
+      })
+      .pipe(
+        tap(() => console.log("SE REPITIO RESP.......")),
+        switchMap((resp) => of(resp))
+      );
   }
 
   // get a case of given id

@@ -130,17 +130,6 @@ const PROVIDERS = [
     provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
     useValue: { floatLabel: "always" },
   },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: InvocationService,
-    multi: true,
-  },
-  ReferenceHelper,
-  ThemeService,
-  EncryptDecryptService,
-  HandleStorageService,
-  ThemeGuard,
-  TempEnrolledGuard,
 ];
 const DECLARATIONS = [
   AppComponent,
