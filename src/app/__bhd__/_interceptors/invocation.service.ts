@@ -94,6 +94,13 @@ export class InvocationService implements HttpInterceptor {
           const { data } = event.body;
           if (data) {
             const decryptData = this.encryptDecryptService.decrypt<any>(data);
+
+            console.group("RESPUESTA =>-----");
+            console.log("url:", req.url);
+            console.log("method", req.method);
+            console.log("data:", decryptData);
+
+            console.groupEnd();
             const cloneResponse = event.clone({
               body: decryptData,
             });

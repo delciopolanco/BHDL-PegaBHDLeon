@@ -249,32 +249,19 @@ export class WorkitemComponent implements OnInit {
       });
   }
 
-  getCaseIdByRefObject(refObject) {
-    return refObject.split(" ")[1];
-  }
   ngOnInit() {
     const workItem$ = this.cservice.getCaseExternal().pipe(
-      switchMap((caseResult) => {
-        const worklistParams = new HttpParams().set("Work", "true");
-        return this.datapage.getDataPage("D_Worklist", worklistParams).pipe(
-          map((response) => response.body),
-          pluck("pxResults"),
-          tap((worklist: []) => {
-            const workItemAssigment = worklist.filter(
-              (item) => item["pxRefObjectKey"] === caseResult.body.ID //"BHD-SELFSERVICE-BHDCLM-WORK O-174009"
-            )[0];
-            if (workItemAssigment) {
-              const CASE_ID = this.getCaseIdByRefObject(caseResult.body.ID);
-              this.gaservice.sendMessage(CASE_ID, workItemAssigment);
-            }
-          })
-        );
+      tap((result) => {
+        const { ID, nextAssignmentID } = result.body;
+        const assigment = {
+          pzInsKey: nextAssignmentID,
+        };
+        this.gaservice.sendMessage(ID, assigment);
       })
     );
 
     const theme$ = this.themeService.theme$.pipe(
       tap((data) => (this.isPlatformMobile = data !== null)),
-      tap((data) => console.log("SE ESTA LLAMANDO EL TEMA")),
       map((data) => data !== null),
       switchMap((isPlatformMobile) => (isPlatformMobile ? workItem$ : null))
     );

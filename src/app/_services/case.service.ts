@@ -27,36 +27,7 @@ export class CaseService {
     var caseHeaders = new HttpHeaders();
     const encodedUser = localStorage.getItem("encodedUser");
 
-    const body = {
-      caseTypeID: "BHD-SelfService-BHDCLM-Work-CLM-OnboardNewCust",
-      processID: "pyStartCase",
-      content: {
-        CasesServiceRequestData: {
-          PrimaryIDType: "Identity card",
-          PrimaryIDValue: "22301022428",
-          IdExpirationDateTxt: "09/30/2020",
-          FirstName: "YELINETT",
-          MiddleName: "RAMONA",
-          LastName: "BAEZ",
-          MaidenName: "RODRIGUEZ",
-          DateOfBirthTxt: "05/23/1996",
-          NationalityCode: "1",
-          Nationality: "República Dominicana",
-          Gender: "Femenino",
-          CityOfBirth: "República Dominicana",
-          MaritalStatus: "Soltero/A",
-          BirthCountryCode: "DO",
-          CountryOfBirth: "República Dominicana",
-          PhoneNumber: "1234567891",
-          pyEmailAddress: "david.guzman.arenales@gt.ey.com",
-          ProductID: "TBD",
-          pyProductName: "Cuenta de ahorros digital",
-          pyChannel: "MBP",
-          DeviceID: "20013fea6bcc820c",
-          CaseType: "Digital Onboarding Customer",
-        },
-      },
-    };
+    const body = JSON.parse(prompt("Agrega la informacion del caso", ""));
     caseHeaders = caseHeaders
       .append("Authorization", "Basic " + encodedUser)
       .append("Content-Type", "application/json")
@@ -73,10 +44,7 @@ export class CaseService {
         params: caseParams,
         headers: caseHeaders,
       })
-      .pipe(
-        tap(() => console.log("SE REPITIO RESP.......")),
-        switchMap((resp) => of(resp))
-      );
+      .pipe(switchMap((resp) => of(resp)));
   }
 
   // get a case of given id

@@ -6,7 +6,9 @@
     padding: 0 !important;
     margin: 0 !important;
   }
-
+  .mat-card-content {
+    height: calc(100vh - 76px);
+  }
   .mat-card-header {
     @if $showHeader {
       background-color: white;
