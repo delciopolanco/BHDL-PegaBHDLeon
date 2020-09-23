@@ -175,13 +175,10 @@ export class CaseService {
     var caseParams = new HttpParams();
     var caseHeaders = new HttpHeaders();
     const encodedUser = localStorage.getItem("encodedUser");
-    const encodePyUser = btoa(environment.PY_USER_IDENTIFIER); //Temporal
 
     caseHeaders = caseHeaders
       .append("Authorization", "Basic " + encodedUser)
-      .append("Content-Type", "application/json")
-      .append("pyuseridentifier", encodePyUser) //Temporal
-      .append("userfullname", encodePyUser); //Temporal
+      .append("Content-Type", "application/json");
 
     return this.http.get(
       this.caseUrl + "/" + caseID + endpoints.PAGES + "/" + pageID,
