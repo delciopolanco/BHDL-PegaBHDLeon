@@ -68,7 +68,8 @@ export class InvocationService implements HttpInterceptor {
           url,
         });
         break;
-      case HttpMethod.POST || HttpMethod.PUT:
+      case HttpMethod.POST:
+      case HttpMethod.PUT:
         const basicReq = this.getBasicRequest(req.body);
         const bodyToEncrypt = JSON.stringify({ ...basicReq });
         const body = {
