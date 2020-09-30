@@ -88,6 +88,7 @@ import { TempEnrolledGuard } from "./__bhd__/_guards/temp-enrolled.guard";
 import { EncryptDecryptService } from "./__bhd__/_services/encrypt-decrypt.service";
 import { HandleStorageService } from "./__bhd__/_services/handleStorage.service";
 import { BhdModule } from "./__bhd__/bhd.module";
+import { LoadingModalComponent, ModalContentComponent } from './_subcomponents/loading-modal/loading-modal.component';
 
 const IMPORTS = [
   BrowserModule,
@@ -173,6 +174,8 @@ const DECLARATIONS = [
   NosupportComponent,
   SettingsdialogComponent,
   LocalactiondialogComponent,
+  LoadingModalComponent,
+  ModalContentComponent
 ];
 @NgModule({
   declarations: [...DECLARATIONS],
