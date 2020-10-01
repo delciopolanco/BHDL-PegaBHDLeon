@@ -89,6 +89,8 @@ import { EncryptDecryptService } from "./__bhd__/_services/encrypt-decrypt.servi
 import { HandleStorageService } from "./__bhd__/_services/handleStorage.service";
 import { BhdModule } from "./__bhd__/bhd.module";
 import { LoadingModalComponent, ModalContentComponent } from './_subcomponents/loading-modal/loading-modal.component';
+import { BhdHeaderComponent } from './_subcomponents/bhd-header/bhd-header.component';
+import { TryAgainModalComponent, TryAgainModalContentComponent } from './_subcomponents/try-again-modal/try-again-modal.component';
 
 const IMPORTS = [
   BrowserModule,
@@ -175,7 +177,10 @@ const DECLARATIONS = [
   SettingsdialogComponent,
   LocalactiondialogComponent,
   LoadingModalComponent,
-  ModalContentComponent
+  ModalContentComponent,
+  BhdHeaderComponent,
+  TryAgainModalComponent,
+  TryAgainModalContentComponent
 ];
 @NgModule({
   declarations: [...DECLARATIONS],

@@ -1,16 +1,11 @@
+<app-loading-modal [openModal]="openModalEvent" [closeModal]="closeModalEvent"></app-loading-modal>
 <div [class]="currentCaseID$">
-  <mat-card
-    class="workitempanel-card"
-    *ngIf="isLoaded"
-    style="margin: 0.5em; padding: 10px 10px 20px 10px"
-  >
+  <app-bhd-header [title]="'Solicitud'" (cancelButton)="cancelForm()"></app-bhd-header>
+  <mat-card class="workitempanel-card" *ngIf="isLoaded" style="margin: 0.5em; padding: 10px 10px 20px 10px">
     <mat-card-header>
       <div class="pega-workitem-header">
         <div class="pega-workitem-breadcrumb" *ngIf="!isNewPage">
-          <app-breadcrumb
-            *ngIf="currentCaseLoaded$"
-            [CurrentCase]="currentCase$"
-          ></app-breadcrumb>
+          <app-breadcrumb *ngIf="currentCaseLoaded$" [CurrentCase]="currentCase$"></app-breadcrumb>
         </div>
         <div class="pega-workitem-actions-menu">
           <button mat-button [matMenuTriggerFor]="actionMenu">
@@ -23,11 +18,7 @@
             </span>
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="refreshView()">Refresh</button>
-            <button
-              mat-menu-item
-              *ngFor="let lAction of localActions$"
-              (click)="handleLocalAction(lAction.ID)"
-            >
+            <button mat-menu-item *ngFor="let lAction of localActions$" (click)="handleLocalAction(lAction.ID)">
               {{ lAction.name }}
             </button>
             <span *ngIf="assignmentActions$.length > 0">
@@ -35,11 +26,8 @@
               <span mat-menu-item disabled>
                 <mat-icon>edit</mat-icon><label>Assignment Actions</label>
               </span>
-              <button
-                mat-menu-item
-                *ngFor="let aAction of assignmentActions$"
-                (click)="handleAssignmentAction(aAction.ID)"
-              >
+              <button mat-menu-item *ngFor="let aAction of assignmentActions$"
+                (click)="handleAssignmentAction(aAction.ID)">
                 {{ aAction.name }}
               </button>
             </span>
@@ -53,11 +41,7 @@
         <div class="pega-workitem-item" style="width: 70%">
           <div style="padding: 5px">
             <app-topview #topview *ngIf="!isPage"></app-topview>
-            <app-page
-              *ngIf="isPage"
-              [pageID]="currentPageID$"
-              [caseID]="currentCaseID$"
-            ></app-page>
+            <app-page *ngIf="isPage" [pageID]="currentPageID$" [caseID]="currentCaseID$"></app-page>
           </div>
         </div>
         <div class="pega-workitem-details" style="width: 30%">
@@ -76,49 +60,24 @@
     <mat-card-actions>
       <mat-grid-list cols="2" rowHeight="50px">
         <mat-grid-tile>
-          <button
-            mat-raised-button
-            color="secondary"
-            (click)="closeWork()"
-            *ngIf="isView || isNewPage"
-          >
+          <button mat-raised-button color="secondary" (click)="closeWork()" *ngIf="isView || isNewPage">
             Cancel
           </button>
-          <button
-            mat-raised-button
-            color="secondary"
-            (click)="closeWork()"
-            *ngIf="isPage"
-          >
+          <!-- <button mat-raised-button color="secondary" (click)="closeWork()" *ngIf="isPage">
             Close
-          </button>
+          </button> -->
         </mat-grid-tile>
         <mat-grid-tile>
-          <button
-            mat-raised-button
-            color="secondary"
-            (click)="saveView()"
-            *ngIf="isView"
-          >
+          <!-- <button mat-raised-button color="secondary" (click)="saveView()" *ngIf="isView">
             Save
-          </button>
+          </button> -->
           <div style="padding: 0px 10px 0px 10px"></div>
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="submitView()"
-            *ngIf="isView"
-          >
+          <button mat-raised-button color="primary" (click)="submitView()" *ngIf="isView">
             Submit
           </button>
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="createNew()"
-            *ngIf="isNewPage"
-          >
+          <!-- <button mat-raised-button color="primary" (click)="createNew()" *ngIf="isNewPage">
             Create
-          </button>
+          </button> -->
         </mat-grid-tile>
       </mat-grid-list>
     </mat-card-actions>

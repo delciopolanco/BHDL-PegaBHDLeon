@@ -58,7 +58,7 @@ export class CaseService {
       .append("Content-Type", "application/json")
       .append("Access-Control-Expose-Headers", "etag");
 
-    return this.http.get(this.caseUrl + "/" + id, {
+    return this.http.get(this.caseUrl + "?ID=" + id, {
       observe: "response",
       params: caseParams,
       headers: caseHeaders,

@@ -15,3 +15,7 @@ body[theme="mbp-android-theme"] {
 body[theme="mbp-ios-theme"] {
   @include bhd-themes("mbp-ios");
 }
+
+body {
+  font-family: 'Trebuchet MS';
+}

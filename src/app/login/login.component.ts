@@ -1,19 +1,16 @@
+import { HttpParams } from "@angular/common/http";
 import {
   Component,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  Output, EventEmitter
+  EventEmitter,
+  OnInit
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { HttpParams } from "@angular/common/http";
-import { UserService } from "../_services/user.service";
-import { GetLoginStatusService } from "../_messages/getloginstatus.service";
-import { DatapageService } from "../_services/datapage.service";
-import { ProgressSpinnerService } from "../_messages/progressspinner.service";
-import { interval } from "rxjs/internal/observable/interval";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { interval } from "rxjs/internal/observable/interval";
+import { GetLoginStatusService } from "../_messages/getloginstatus.service";
+import { ProgressSpinnerService } from "../_messages/progressspinner.service";
+import { DatapageService } from "../_services/datapage.service";
+import { UserService } from "../_services/user.service";
 
 @Component({
   selector: "app-login",
@@ -22,8 +19,6 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 })
 export class LoginComponent implements OnInit {
   loginData: any = {};
-  @Output() openModalEvent = new EventEmitter<any>();
-  @Output() closeModalEvent = new EventEmitter<any>();
 
   constructor(
     private uservice: UserService,
@@ -47,45 +42,43 @@ export class LoginComponent implements OnInit {
   }
 
   attemptLogin() {
-    this.openModalEvent.emit();
-    setTimeout(() => {this.closeModalEvent.emit()}, 3000);
-    // this.psservice.sendMessage(true);
+    this.psservice.sendMessage(true);
 
-    // this.uservice
-    //   .login(this.loginData.userName, this.loginData.password)
-    //   .subscribe(
-    //     (response) => {
-    //       if (response.status == 200) {
-    //         let operatorParams = new HttpParams();
+    this.uservice
+      .login(this.loginData.userName, this.loginData.password)
+      .subscribe(
+        (response) => {
+          if (response.status == 200) {
+            let operatorParams = new HttpParams();
 
-    //         this.dservice.getDataPage("D_OperatorID", operatorParams).subscribe(
-    //           (response) => {
-    //             this.psservice.sendMessage(false);
+            this.dservice.getDataPage("D_OperatorID", operatorParams).subscribe(
+              (response) => {
+                this.psservice.sendMessage(false);
 
-    //             let operator: any = response.body;
-    //             localStorage.setItem("userFullName", operator.pyUserName);
-    //             localStorage.setItem("userAccessGroup", operator.pyAccessGroup);
-    //             localStorage.setItem("userWorkGroup", operator.pyWorkGroup);
-    //             localStorage.setItem(
-    //               "userWorkBaskets",
-    //               JSON.stringify(operator.pyWorkBasketList)
-    //             );
+                let operator: any = response.body;
+                localStorage.setItem("userFullName", operator.pyUserName);
+                localStorage.setItem("userAccessGroup", operator.pyAccessGroup);
+                localStorage.setItem("userWorkGroup", operator.pyWorkGroup);
+                localStorage.setItem(
+                  "userWorkBaskets",
+                  JSON.stringify(operator.pyWorkBasketList)
+                );
 
-    //             this.glsservice.sendMessage("LoggedIn");
-    //           },
-    //           (err) => {
-    //             let sError = "Errors getting data page: " + err.message;
-    //             let snackBarRef = this.snackBar.open(sError, "Ok");
-    //           }
-    //         );
-    //       }
-    //     },
-    //     (err) => {
-    //       let snackBarRef = this.snackBar.open(err.message, "Ok");
-    //       this.glsservice.sendMessage("LoggedOut");
-    //       localStorage.clear();
-    //     }
-    //   );
+                this.glsservice.sendMessage("LoggedIn");
+              },
+              (err) => {
+                let sError = "Errors getting data page: " + err.message;
+                let snackBarRef = this.snackBar.open(sError, "Ok");
+              }
+            );
+          }
+        },
+        (err) => {
+          let snackBarRef = this.snackBar.open(err.message, "Ok");
+          this.glsservice.sendMessage("LoggedOut");
+          localStorage.clear();
+        }
+      );
   }
 
   fieldChanged(e) {

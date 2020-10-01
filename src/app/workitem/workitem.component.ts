@@ -1,44 +1,39 @@
-import { Component, OnInit, ViewChild, Inject, Input } from "@angular/core";
-import { Subscription, Observable, of } from "rxjs";
-import { GetAssignmentService } from "../_messages/getassignment.service";
-import { GetViewService } from "../_messages/getview.service";
-import { GetPageService } from "../_messages/getpage.service";
-import { GetChangesService } from "../_messages/getchanges.service";
-import { AssignmentService } from "../_services/assignment.service";
-import { CaseService } from "../_services/case.service";
-import { CloseWorkService } from "../_messages/closework.service";
-import { ChangeDetectorRef } from "@angular/core";
-import { interval } from "rxjs/internal/observable/interval";
-import { TopviewComponent } from "../_subcomponents/topview/topview.component";
-import { ReferenceHelper } from "../_helpers/reference-helper";
-import { PegaErrors } from "../_constants/PegaErrors";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { GetActionsService } from "../_messages/getactions.service";
-import { RefreshWorkListService } from "../_messages/refreshworklist.service";
-import { RefreshCaseService } from "../_messages/refreshcase.service";
-import { RefreshAssignmentService } from "../_messages/refreshassignment.service";
-import { GetNewCaseService } from "../_messages/getnewcase.service";
-import { ToppageComponent } from "../_subcomponents/toppage/toppage.component";
-import { RenameTabService } from "../_messages/renametab.service";
-import { OpenAssignmentService } from "../_messages/openassignment.service";
-import { GetRecentService } from "../_messages/getrecent.service";
-import { GetCaseService } from "../_messages/getcase.service";
-import { ProgressSpinnerService } from "../_messages/progressspinner.service";
-import { PageInstructionsService } from "../_messages/pageinstructions.service";
-import { PageInstructions } from "../_helpers/pageinstructions";
+import { ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import {
   MatDialog,
-  MatDialogModule,
-  MatDialogClose,
   MatDialogRef,
-  MAT_DIALOG_DATA,
+  MAT_DIALOG_DATA
 } from "@angular/material/dialog";
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { UserService } from "../_services/user.service";
-import { map, pluck, switchMap, tap } from "rxjs/operators";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Subscription } from "rxjs";
+import { interval } from "rxjs/internal/observable/interval";
+import { map, switchMap, tap } from "rxjs/operators";
+import { PegaErrors } from "../_constants/PegaErrors";
+import { PageInstructions } from "../_helpers/pageinstructions";
+import { ReferenceHelper } from "../_helpers/reference-helper";
+import { CloseWorkService } from "../_messages/closework.service";
+import { GetActionsService } from "../_messages/getactions.service";
+import { GetAssignmentService } from "../_messages/getassignment.service";
+import { GetCaseService } from "../_messages/getcase.service";
+import { GetChangesService } from "../_messages/getchanges.service";
+import { GetNewCaseService } from "../_messages/getnewcase.service";
+import { GetPageService } from "../_messages/getpage.service";
+import { GetRecentService } from "../_messages/getrecent.service";
+import { GetViewService } from "../_messages/getview.service";
+import { OpenAssignmentService } from "../_messages/openassignment.service";
+import { PageInstructionsService } from "../_messages/pageinstructions.service";
+import { ProgressSpinnerService } from "../_messages/progressspinner.service";
+import { RefreshAssignmentService } from "../_messages/refreshassignment.service";
+import { RefreshCaseService } from "../_messages/refreshcase.service";
+import { RefreshWorkListService } from "../_messages/refreshworklist.service";
+import { RenameTabService } from "../_messages/renametab.service";
+import { AssignmentService } from "../_services/assignment.service";
+import { CaseService } from "../_services/case.service";
 import { DatapageService } from "../_services/datapage.service";
-import { HttpParams } from "@angular/common/http";
-import { flatMap } from "lodash";
+import { UserService } from "../_services/user.service";
+import { ToppageComponent } from "../_subcomponents/toppage/toppage.component";
+import { TopviewComponent } from "../_subcomponents/topview/topview.component";
 import { ThemeService } from "../__bhd__/_services/theme.service";
 
 @Component({
@@ -137,6 +132,9 @@ export class WorkitemComponent implements OnInit {
 
   bUseRepeatPageInstructions: boolean = false;
   bUsePagePageInstructions: boolean = false;
+
+  openModalEvent: EventEmitter<any> = new EventEmitter<any>();
+  closeModalEvent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private aservice: AssignmentService,
@@ -250,6 +248,7 @@ export class WorkitemComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.openModalEvent.emit();
     const workItem$ = this.cservice.getCaseExternal().pipe(
       tap((result) => {
         const { ID, nextAssignmentID } = result.body;
@@ -275,6 +274,11 @@ export class WorkitemComponent implements OnInit {
     this.bUsePagePageInstructions =
       localStorage.getItem("usePagePageInstructions") == "true" ? true : false;
     this.bRefreshOccurred = false;
+    this.closeModalEvent.emit();
+  }
+
+  cancelForm() {
+    alert("ToDo")
   }
 
   ngOnDestroy() {
