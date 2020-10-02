@@ -59,26 +59,26 @@
     <mat-divider></mat-divider>
     <mat-card-actions>
       <mat-grid-list cols="2" rowHeight="50px">
-        <mat-grid-tile>
-          <button mat-raised-button color="secondary" (click)="closeWork()" *ngIf="isView || isNewPage">
-            Cancel
+        <!-- <mat-grid-tile> -->
+          <button style="justify-content: flex-start !important;" mat-raised-button color="secondary" (click)="closeWork()" *ngIf="isView || isNewPage">
+            Cancelar
           </button>
           <!-- <button mat-raised-button color="secondary" (click)="closeWork()" *ngIf="isPage">
             Close
           </button> -->
-        </mat-grid-tile>
-        <mat-grid-tile>
+        <!-- </mat-grid-tile>
+        <mat-grid-tile> -->
           <!-- <button mat-raised-button color="secondary" (click)="saveView()" *ngIf="isView">
             Save
           </button> -->
-          <div style="padding: 0px 10px 0px 10px"></div>
-          <button mat-raised-button color="primary" (click)="submitView()" *ngIf="isView">
-            Submit
+          <!-- <div style="padding: 0px 10px 0px 10px"></div> -->
+          <button style="justify-content: flex-end !important;" mat-raised-button color="primary" (click)="submitView()" *ngIf="isView">
+            Continuar
           </button>
           <!-- <button mat-raised-button color="primary" (click)="createNew()" *ngIf="isNewPage">
             Create
           </button> -->
-        </mat-grid-tile>
+        <!-- </mat-grid-tile> -->
       </mat-grid-list>
     </mat-card-actions>
   </mat-card>
